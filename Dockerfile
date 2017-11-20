@@ -1,6 +1,6 @@
 FROM golang:1.9-alpine as builder
 
-ENV OPENFORTIVPN_VERSION=v1.5.0
+ENV OPENFORTIVPN_VERSION=v1.6.0
 
 RUN apk update && apk upgrade && \
 	apk add --no-cache bash \
