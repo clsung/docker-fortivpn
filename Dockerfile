@@ -32,6 +32,7 @@ RUN apk --update upgrade \
     && apk del .build-deps
 
 RUN go get github.com/jpillora/go-tcp-proxy/cmd/tcp-proxy
+RUN go get github.com/coreos/etcd/cmd/etcdctl  # https://github.com/coreos/etcd/issues/7487
 
 
 FROM alpine:3.6
@@ -41,6 +42,7 @@ RUN apk --no-cache add ca-certificates openssl ppp curl su-exec bash && rm -rf /
 WORKDIR /
 COPY --from=builder /usr/bin/openfortivpn /usr/bin/openfortivpn
 COPY --from=builder /go/bin/tcp-proxy /usr/bin/tcp-proxy
+COPY --from=builder /go/bin/etcdctl /usr/bin/etcdctl
 COPY docker-entrypoint.sh /
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
