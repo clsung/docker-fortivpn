@@ -1,6 +1,6 @@
-FROM golang:1.9-alpine as builder
+FROM golang:1.11-alpine as builder
 
-ENV OPENFORTIVPN_VERSION=v1.6.0
+ENV OPENFORTIVPN_VERSION=v1.7.1
 
 RUN apk update && apk upgrade && \
 	apk add --no-cache bash \
@@ -32,10 +32,10 @@ RUN apk --update upgrade \
     && apk del .build-deps
 
 RUN go get github.com/jpillora/go-tcp-proxy/cmd/tcp-proxy
-RUN go get github.com/coreos/etcd/cmd/etcdctl  # https://github.com/coreos/etcd/issues/7487
+RUN go get github.com/etcd-io/etcd/etcdctl  # https://github.com/coreos/etcd/issues/7487
 
 
-FROM alpine:3.6
+FROM alpine:3.8
 
 RUN apk --no-cache add ca-certificates openssl ppp curl su-exec bash && rm -rf /var/cache/apk/*;
 
